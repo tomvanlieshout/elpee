@@ -10,8 +10,8 @@ Elpee is a multiplatform app written entirely in [Dart/Flutter](https://flutter.
 
 
 <div>
-    <a href=''><img alt='Get it on Google Play' src='assets/buttons/google_play.png' height='48px'/></a>
-    <a href=''><img alt='Get it on the App Store' src='assets/buttons/app_store.png' height='48px'/></a>
+    <a href='https://play.google.com/store/apps/details?id=com.tom.elpee'><img alt='Get it on Google Play' src='assets/buttons/google_play.png' height='48px'/></a>
+    <a href='https://apps.apple.com/us/app/elpee/id1501845272?ls=1'><img alt='Get it on the App Store' src='assets/buttons/app_store.png' height='48px'/></a>
 </div>
 
 ## Why
