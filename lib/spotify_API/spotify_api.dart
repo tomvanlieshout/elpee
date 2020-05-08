@@ -80,7 +80,6 @@ class SpotifyApi {
     if (tokenIsValid) {
       _setHeaders(prefs.getString('access_token'));
       return await get(searchEndpoint + query, headers: headers);
-      //TODO
     } else {
       try {
         await auth.getAuthToken();
@@ -101,7 +100,6 @@ class SpotifyApi {
     if (tokenIsValid) {
       _setHeaders(prefs.getString('access_token'));
       return await get(query, headers: headers);
-      //TODO
     } else {
       try {
         await auth.getAuthToken();

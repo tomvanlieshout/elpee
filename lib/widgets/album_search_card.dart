@@ -40,7 +40,7 @@ class AlbumSearchCard extends StatelessWidget {
               image: albumModel.images[2]['url'],
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.75,
+              width: MediaQuery.of(context).size.width * 0.7,
               padding: EdgeInsets.all(10),
               color: Theme.of(context).primaryColor,
               child: Column(

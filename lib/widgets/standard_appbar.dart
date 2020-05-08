@@ -1,5 +1,5 @@
+import 'package:elpee/pages/root_page.dart';
 import 'package:flutter/material.dart';
-import '../pages/home.dart';
 
 class StandardAppbar extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -11,8 +11,8 @@ class StandardAppbar extends StatelessWidget with PreferredSizeWidget {
       title: GestureDetector(
         onTap: () {
           Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => Home()),
-            ModalRoute.withName(Home.routeName),
+            MaterialPageRoute(builder: (BuildContext context) => RootPage()),
+            ModalRoute.withName(RootPage.routeName),
           );
         },
         child: Text(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './track.dart';
+import 'package:elpee/data/model/track.dart';
 
-class TopTrack extends Track{
+class TopTrack extends Track {
   final Map<String, dynamic> album;
   final List<dynamic> artists;
   final List<dynamic> availableMarkets;

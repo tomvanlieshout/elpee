@@ -1,11 +1,12 @@
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class About extends StatelessWidget {
   About();
-  final String gitLab = 'View the source code on Gitlab:';
+  final String gitLab = 'View the source code on Github:';
   final String about =
-      'Elpee is a Flutter/Dart application developed by Tom van Lieshout between August 2019 and March 2020. \n\nThe app uses the Spotify and MediaWiki APIs, as well as a Cloud Firestore database. For state management, the BLoC pattern was used.';
+      'Elpee is a Flutter/Dart application developed by Tom van Lieshout since August 2019. \n\nThe app uses the Spotify and MediaWiki APIs, as well as a Cloud Firestore database. For state management, the BLoC pattern was used.';
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,11 +39,13 @@ class About extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.only(top: 15),
+              height: 48,
+              width: 48,
               child: IconButton(
-                icon: Image.asset('assets/images/gitlab-logo.png'),
-                tooltip: 'Open Gitlab',
+                icon: Icon(FeatherIcons.github),
+                tooltip: 'Open Github',
                 onPressed: () =>
-                    launch('https://gitlab.com/tomvanlieshout2/elpee'),
+                    launch('https://github.com/tomvanlieshout/elpee'),
               ),
             ),
           ],

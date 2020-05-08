@@ -38,7 +38,6 @@ class Authentication {
   }
 
   Future _setTokenExpirationDate() async {
-    // TODO if (prefs == null)
     if (prefs == null) {
       prefs = await SharedPreferences.getInstance();
     }

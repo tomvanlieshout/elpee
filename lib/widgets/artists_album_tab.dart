@@ -19,8 +19,8 @@ class ArtistsAlbumTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView(
-      shrinkWrap: true,
       physics: ScrollPhysics(),
+      shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
       ),

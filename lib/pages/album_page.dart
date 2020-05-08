@@ -1,9 +1,9 @@
+import 'package:elpee/pages/wall_picker.dart';
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flushbar/flushbar.dart';
 
-import '../firestore/firestore_service.dart';
 import '../pages/artist_page.dart';
 import '../widgets/standard_appbar.dart';
 import '../widgets/album_track_card_list.dart';
@@ -14,17 +14,21 @@ import '../data/artist_repository.dart';
 import '../data/model/artist.dart';
 import '../data/model/album.dart';
 import '../data/model/track.dart';
-import '../data/model/top_track.dart';
+import 'package:elpee/helpers.dart';
 
-class AlbumPage extends StatelessWidget {
+class AlbumPage extends StatefulWidget {
   static final routeName = '/album-page';
+
+  @override
+  _AlbumPageState createState() => _AlbumPageState();
+}
+
+class _AlbumPageState extends State<AlbumPage> {
   Album album;
-  bool showSaveButton;
   Artist artist;
-  List<TopTrack> topTracks;
   List<Track> tracks;
-  List<Album> albums;
   String wikiLink;
+  bool showSaveButton;
 
   _getArtistData(BuildContext context) {
     String id = album.artists[0]['id'];
@@ -36,34 +40,54 @@ class AlbumPage extends StatelessWidget {
       if (state is ArtistLoadSuccess) {
         artist = state.artist;
       } else if (state is ArtistError) {
-        _showFlushBar(
-          context, 'Something went wrong. Please try again later.'
-        );
+        Helpers.showFlushbar(context, 'Something went wrong. Please try again later.', Icon(FeatherIcons.alertTriangle, color: Colors.amber));
       }
     });
 
     artistBloc.close();
   }
 
-  _showFlushBar(BuildContext context, String message) {
-    return Flushbar(
-      message: message,
-      duration: Duration(seconds: 4),
-      isDismissible: true,
-      flushbarPosition: FlushbarPosition.BOTTOM,
-      backgroundColor: Colors.black,
-      borderRadius: 8,
-      margin: EdgeInsets.all(5),
-      borderColor: Colors.white,
-      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-      icon: Icon(Icons.error, color: Colors.amber),
-      overlayBlur: 1,
-      shouldIconPulse: false,
-    ).show(context);
-  }
-
   List<Track> _getTracks() {
     return Track.listFromMap(album.tracks['items']);
+  }
+
+  void _showBottomModal(BuildContext ctx) {
+    showModalBottomSheet<void>(
+      context: ctx,
+      builder: (BuildContext context) {
+        return Container(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(ctx).pop();
+              Navigator.of(ctx)
+                  .pushNamed(ArtistPage.routeName, arguments: artist);
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.15,
+              color: Theme.of(context).primaryColor,
+              child: Container(
+                margin:
+                    EdgeInsets.only(top: 14, left: 14, right: 14, bottom: 14),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.amber,
+                      ),
+                    ),
+                    Text(
+                      'Go to artist',
+                      style: Theme.of(context).textTheme.body1,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -74,59 +98,6 @@ class AlbumPage extends StatelessWidget {
       showSaveButton = arguments['showSaveButton'];
       tracks = _getTracks();
       _getArtistData(context);
-    }
-
-    _addAlbum(BuildContext context) {
-      createAlbum(album).then((didSucceed) {
-        if (didSucceed) {
-          _showFlushBar(context, '${album.name} has been saved to The Wall');
-        } else {
-          _showFlushBar(context,
-              'Either something went wrong, or the album already exists.');
-        }
-      });
-    }
-
-    _viewArtist() {
-      Navigator.of(context).pushNamed(ArtistPage.routeName, arguments: artist);
-    }
-
-    void _showBottomModal() {
-      showModalBottomSheet<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return Container(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                _viewArtist();
-              },
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.15,
-                color: Theme.of(context).primaryColor,
-                child: Container(
-                  margin:
-                      EdgeInsets.only(top: 14, left: 14, right: 14, bottom: 14),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.amber,
-                        ),
-                      ),
-                      Text(
-                        'Go to artist',
-                        style: Theme.of(context).textTheme.body1,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      );
     }
 
     return Scaffold(
@@ -145,7 +116,7 @@ class AlbumPage extends StatelessWidget {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      _showBottomModal();
+                      _showBottomModal(context);
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.65,
@@ -177,7 +148,9 @@ class AlbumPage extends StatelessWidget {
                           ? Column(
                               children: <Widget>[
                                 IconButton(
-                                  onPressed: () => _addAlbum(context),
+                                  onPressed: () => Navigator.of(context)
+                                      .pushNamed(WallPicker.routeName,
+                                          arguments: {'album': album}),
                                   icon: Icon(
                                     Icons.add_circle,
                                     color: Colors.white,

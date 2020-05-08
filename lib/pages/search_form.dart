@@ -1,5 +1,7 @@
 import 'package:elpee/bloc/bloc.dart';
 import 'package:elpee/data/model/artist.dart';
+import 'package:elpee/widgets/standard_appbar.dart';
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,13 +25,23 @@ class _SearchFormState extends State<SearchForm> {
   List<ArtistCard> artistList = new List<ArtistCard>();
   String query;
   bool toggle = true;
+  bool fromUserWall;
 
   @override
   Widget build(BuildContext context) {
+    if (fromUserWall == null) {
+      Map args = ModalRoute.of(context).settings.arguments as Map;
+      if (args == null) {
+        fromUserWall = false;
+      } else {
+        fromUserWall = true;
+      }
+    }
     return Scaffold(
+      appBar: fromUserWall ? StandardAppbar() : null,
       body: WillPopScope(
         onWillPop: () async {
-          Future.value(false);
+          return Future.value(fromUserWall);
         },
         child: Container(
           alignment: Alignment.bottomCenter,
@@ -48,7 +60,7 @@ class _SearchFormState extends State<SearchForm> {
                 child: Row(
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.65,
+                      width: MediaQuery.of(context).size.width * 0.6,
                       padding: EdgeInsets.only(left: 10, right: 10),
                       margin: EdgeInsets.only(bottom: 15, right: 10),
                       decoration: BoxDecoration(
@@ -57,6 +69,7 @@ class _SearchFormState extends State<SearchForm> {
                       ),
                       child: TextField(
                         cursorColor: Colors.amber,
+                        autofocus: true,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: toggle
@@ -168,7 +181,7 @@ showError(BuildContext context, String message) {
     margin: EdgeInsets.all(5),
     borderColor: Colors.white,
     dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-    icon: Icon(Icons.error, color: Colors.amber),
+    icon: Icon(FeatherIcons.alertTriangle, color: Colors.amber),
     overlayBlur: 1,
     shouldIconPulse: false,
   ).show(context);
@@ -185,7 +198,6 @@ Container buildAlbumsWithData(BuildContext context, List<Album> albums) {
       right: 8,
     ),
     child: ListView(
-      shrinkWrap: true,
       scrollDirection: Axis.vertical,
       children: albumList,
     ),
@@ -203,7 +215,6 @@ Container buildArtistsWithData(BuildContext context, List<Artist> artists) {
       right: 8,
     ),
     child: ListView(
-      shrinkWrap: true,
       scrollDirection: Axis.vertical,
       children: artistList,
     ),

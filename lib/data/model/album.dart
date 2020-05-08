@@ -63,6 +63,28 @@ class Album extends Equatable {
     );
   }
 
+  static Map<String, dynamic> toMap(Album model) {
+    return {
+      'album_type': model.albumType,
+      'artists': model.artists,
+      'available_markets': model.availableMarkets,
+      'copyrights': model.copyrights,
+      'external_urls': model.externalUrls,
+      'href': model.href,
+      'id': model.id,
+      'images': model.images,
+      'label': model.label,
+      'name': model.name,
+      'popularity': model.popularity,
+      'release_date': model.releaseDate,
+      'release_date_precision': model.releaseDatePrecision,
+      'total_tracks': model.totalTracks,
+      'tracks': model.tracks,
+      'type': model.type,
+      'uri': model.uri,
+    };
+  }
+
   static List<Album> listFromMap(Map<String, dynamic> json, String key) {
     List<Album> response = new List<Album>();
     String jsonKey;

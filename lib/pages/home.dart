@@ -1,3 +1,4 @@
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,9 +9,12 @@ import '../data/artist_repository.dart';
 import './album_wall.dart';
 import './search_form.dart';
 import './settings.dart';
+import '../widgets/help.dart';
+import '../widgets/custom_drawer.dart';
 
 class Home extends StatefulWidget {
   static final String routeName = "/home";
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -47,13 +51,38 @@ class _HomeState extends State<Home> {
     }
   }
 
+  Widget showHelpDialog(BuildContext context) {
+    return Container(
+      child: AlertDialog(
+        content: Help(),
+        backgroundColor: Colors.transparent,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
+      drawer: Drawer(
+        child: CustomDrawer(),
+      ),
       appBar: AppBar(
         centerTitle: true,
-        actions: <Widget>[new Container()],
+        actions: <Widget>[
+          new IconButton(
+            icon: Icon(
+              FeatherIcons.helpCircle,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => showHelpDialog(context),
+              );
+            },
+          )
+        ],
         title: Text(
           'elpee',
           style: Theme.of(context).textTheme.headline,

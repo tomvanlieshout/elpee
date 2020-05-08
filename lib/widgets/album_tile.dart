@@ -1,30 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent_image/transparent_image.dart';
-
 import '../pages/album_page.dart';
-
 import '../data/model/album.dart';
 
-class AlbumTile extends StatelessWidget {
+class AlbumTile extends StatefulWidget {
   final Album albumModel;
   final SharedPreferences prefs;
+  final Function selectCallback;
+  final bool isSelected;
+  final bool selectionState;
 
-  AlbumTile({@required this.prefs, @required this.albumModel});
+  AlbumTile({
+    @required this.prefs,
+    @required this.albumModel,
+    this.selectCallback,
+    @required this.isSelected,
+    @required this.selectionState,
+  });
+
+  @override
+  _AlbumTileState createState() => _AlbumTileState();
+}
+
+class _AlbumTileState extends State<AlbumTile>
+    with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+  Animation<double> animation;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      value: 1.0,
+      duration: Duration(milliseconds: 300),
+      vsync: this,
+    );
+    animation = CurvedAnimation(
+      parent: animationController,
+      curve: Curves.linear,
+    );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 
   void _viewAlbum(BuildContext context) async {
     Navigator.of(context).pushNamed(AlbumPage.routeName,
-        arguments: {'model': albumModel, 'showSaveButton': false});
+        arguments: {'model': widget.albumModel, 'showSaveButton': false});
   }
 
-  // The images map of albumModel consists of 3 sizes, and to limit
-  // data usage, depending on grid delegate,
-  // the smaller images are loaded.
   int determineImageSize() {
-    if (prefs.get('tileCount') == null) {
-      prefs.setDouble('tileCount', 2.0);
+    if (widget.prefs.get('tileCount') == null) {
+      widget.prefs.setDouble('tileCount', 2.0);
     }
-    switch (prefs.get('tileCount').round()) {
+    switch (widget.prefs.get('tileCount').round()) {
       case 1:
         return 0;
       case 2:
@@ -40,16 +73,57 @@ class AlbumTile extends StatelessWidget {
     }
   }
 
+  _select() {
+    widget.selectCallback(widget.albumModel.id, !widget.isSelected);
+    if (!widget.isSelected) {
+      animationController.animateBack(0.8, duration: Duration(milliseconds: 150));
+    } else {
+      animationController.forward();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (!widget.isSelected) {
+      animationController.forward();
+    }
     return GestureDetector(
-      onTap: () => _viewAlbum(context),
+      onTap: widget.selectionState ? _select : () => _viewAlbum(context),
+      onLongPress: _select,
       child: FutureBuilder(builder: (context, snapshot) {
-        return GridTile(
-          child: FadeInImage.memoryNetwork(
-            placeholder: kTransparentImage,
-            image: albumModel.images[determineImageSize()]['url'],
-          ),
+        return Stack(
+          alignment: Alignment.topRight,
+          children: <Widget>[
+            ScaleTransition(
+              scale: animation,
+              child: GridTile(
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: widget.albumModel.images[determineImageSize()]['url'],
+                ),
+              ),
+            ),
+            widget.isSelected
+                ? Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 16,
+                        spreadRadius: 1,
+                      )
+                    ]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                    ),
+                  )
+                : Container(),
+          ],
         );
       }),
     );

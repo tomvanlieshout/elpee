@@ -1,3 +1,5 @@
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
+
 import '../data/model/artist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -47,7 +49,7 @@ class _ArtistBioTabState extends State<ArtistBioTab> {
       margin: EdgeInsets.all(8),
       borderColor: Colors.white,
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-      icon: Icon(Icons.error, color: Colors.amber),
+      icon: Icon(FeatherIcons.alertTriangle, color: Colors.amber),
       overlayBlur: 2,
       shouldIconPulse: false,
     ).show(context);

@@ -26,7 +26,6 @@ class TopTrackCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
       margin: EdgeInsets.all(5),
       child: Row(
         children: <Widget>[

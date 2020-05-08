@@ -45,7 +45,7 @@ class ArtistCard extends StatelessWidget {
                   ),
             Container(
               padding: EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width * 0.75,
+              width: MediaQuery.of(context).size.width * 0.7,
               child: Text(
                 artist.name,
                 overflow: TextOverflow.fade,

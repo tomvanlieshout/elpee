@@ -1,3 +1,4 @@
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flushbar/flushbar.dart';
@@ -38,6 +39,12 @@ class _ArtistPageState extends State<ArtistPage> {
       });
     }
   }
+  
+  @override
+  void dispose() {
+    artistBloc.close();
+    super.dispose();
+  }
 
   Widget _selectTabPage(int index) {
     switch (index) {
@@ -75,16 +82,14 @@ class _ArtistPageState extends State<ArtistPage> {
     albumBloc.add(FetchedAlbumsByArtistId(artist.id));
 
     albumBloc.listen((state) {
-      if (state is AlbumsLoadSuccess) {
+      if (state is AlbumsLoadSuccess && mounted) {
         setState(() {
           albums = state.albums;
         });
-      } else if (state is AlbumError) {
+      } else if (state is AlbumError && mounted) {
         _showError(context, state.message);
       }
     });
-
-    albumBloc.close();
   }
 
   _getTopTracks(BuildContext context) {
@@ -92,11 +97,11 @@ class _ArtistPageState extends State<ArtistPage> {
     artistBloc.add(FetchedWikipediaLink(artist.name));
 
     artistBloc.listen((state) {
-      if (state is TopTracksLoadSuccess) {
+      if (state is TopTracksLoadSuccess && mounted) {
         setState(() {
           topTracks = state.topTracks;
         });
-      } else if (state is WikipediaLinkLoadSuccess) {
+      } else if (state is WikipediaLinkLoadSuccess && mounted) {
         setState(() {
           if (state.link != null) {
             _wikiLink = state.link;
@@ -110,8 +115,6 @@ class _ArtistPageState extends State<ArtistPage> {
         // opening bio tab.
       }
     });
-
-    artistBloc.close();
   }
 
   @override
@@ -166,7 +169,7 @@ class _ArtistPageState extends State<ArtistPage> {
                             _wikiLink != null || _wikiLink == ''
                                 ? IconButton(
                                     iconSize: 36,
-                                    icon: Icon(Icons.language),
+                                    icon: Icon(FeatherIcons.globe, semanticLabel: 'Open WikiPedia'),
                                     onPressed: () => launch(_wikiLink),
                                   )
                                 : Container(),
@@ -213,7 +216,7 @@ class _ArtistPageState extends State<ArtistPage> {
       margin: EdgeInsets.all(5),
       borderColor: Colors.white,
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-      icon: Icon(Icons.error, color: Colors.amber),
+      icon: Icon(FeatherIcons.alertTriangle, color: Colors.amber),
       overlayBlur: 1,
       shouldIconPulse: false,
     ).show(context);
@@ -225,7 +228,7 @@ class _ArtistPageState extends State<ArtistPage> {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.album,
+            FeatherIcons.disc,
             color: _selectedIndex == 0 ? Colors.amber : Colors.white,
           ),
           title: Text(
@@ -237,7 +240,7 @@ class _ArtistPageState extends State<ArtistPage> {
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.music_note,
+            FeatherIcons.music,
             color: _selectedIndex == 1 ? Colors.amber : Colors.white,
           ),
           title: Text(
@@ -249,7 +252,7 @@ class _ArtistPageState extends State<ArtistPage> {
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.import_contacts,
+            FeatherIcons.book,
             color: _selectedIndex == 2 ? Colors.amber : Colors.white,
           ),
           title: Text(

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:elpee/data/album_repository.dart';
 import '../bloc.dart';
+import 'package:elpee/data/album_repository.dart';
 
 class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
   final AlbumRepository albumRepository;
