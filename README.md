@@ -6,7 +6,7 @@
 
 ## About
 
-Elpee is a multiplatform app written entirely in [Dart/Flutter](https://flutter.dev/). The data is retrieved from the [Spotify Web API](https://developer.spotify.com/documentation/web-api/) and the [Wikimedia API](https://www.mediawiki.org/wiki/API:Main_page). I used [Firebase](https://firebase.google.com/) to persist albums on <i>'The Wall'</i>. For state management, I went with the BLoC pattern.
+Elpee is a multiplatform app written entirely in [Dart/Flutter](https://flutter.dev/). The data is retrieved from the [Spotify Web API](https://developer.spotify.com/documentation/web-api/) and the [Wikimedia API](https://www.mediawiki.org/wiki/API:Main_page). I used [Firebase](https://firebase.google.com/) for saving the albums to the walls. For state management, I went with the BLoC pattern.
 
 
 <div>
@@ -18,7 +18,7 @@ Elpee is a multiplatform app written entirely in [Dart/Flutter](https://flutter.
 
 I wanted to practice with Flutter. I decided to use it for my (future) portfolio and made it open source.
 
-The app serves as a music reference app. It has hotlinks to Spotify and Wikipedia. Every user can save albums to 'The Wall': an ever growing pool of albums. I put the emphasis on albums, because I like listening to albums front to back, rather than listening to random songs from a playlist. A lof of the context that contributes to the power of music is missed when listening to seperate songs.
+The app serves as a music reference app. It has hotlinks to Spotify and Wikipedia. The user can create their own album walls, kind of like a digital record collection. I put the emphasis on albums, because I like listening to albums front to back, rather than listening to random songs from a playlist. A lof of the context that contributes to the power of music is missed when listening to seperate songs.
 
 ## What does 'elpee' mean
 
