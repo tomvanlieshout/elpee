@@ -28,3 +28,7 @@ Elpee is Dutch phonetic slang of the abbreviation of an LP record. Like LPs, the
 
 I started in July 2019 with no mobile application experience. I did have about 4 months of experience in JavaScript and React/Redux. The app was launched in March 2020.
 
+## Support
+
+If you wish to contact me, you can do so by emailing to elpee.inquiries@gmail.com
+
