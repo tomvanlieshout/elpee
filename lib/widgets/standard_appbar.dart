@@ -17,7 +17,7 @@ class StandardAppbar extends StatelessWidget with PreferredSizeWidget {
         },
         child: Text(
           'elpee',
-          style: Theme.of(context).textTheme.headline,
+          style: Theme.of(context).textTheme.headline5,
         ),
       ),
       backgroundColor: Theme.of(context).primaryColor,

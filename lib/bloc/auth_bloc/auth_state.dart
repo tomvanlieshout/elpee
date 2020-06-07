@@ -28,6 +28,13 @@ class AuthenticatedState extends AuthState {
   List<Object> get props => [user];
 }
 
+class GuestAccessState extends AuthState {
+  const GuestAccessState();
+
+  @override
+  List<Object> get props => [];
+}
+
 class UnauthenticatedState extends AuthState {
   const UnauthenticatedState();
 

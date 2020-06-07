@@ -402,7 +402,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/elpee.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = X3D5ZGJZ82;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -415,6 +415,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomvanlieshout.elpee;
 				PRODUCT_NAME = elpee;
 				PROVISIONING_PROFILE_SPECIFIER = "elpee provisioning profile";
@@ -538,7 +539,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/elpee.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = X3D5ZGJZ82;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -551,6 +552,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomvanlieshout.elpee;
 				PRODUCT_NAME = elpee;
 				PROVISIONING_PROFILE_SPECIFIER = "elpee provisioning profile";
@@ -566,7 +568,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/elpee.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = X3D5ZGJZ82;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -579,6 +581,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomvanlieshout.elpee;
 				PRODUCT_NAME = elpee;
 				PROVISIONING_PROFILE_SPECIFIER = "elpee provisioning profile";

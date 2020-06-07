@@ -172,7 +172,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       borderColor: Colors.white,
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
       icon: Icon(FeatherIcons.alertTriangle, color: Colors.amber),
-      overlayBlur: 1,
+      routeBlur: 1,
       shouldIconPulse: false,
     ).show(context);
   }

@@ -23,8 +23,7 @@ class AlbumTile extends StatefulWidget {
   _AlbumTileState createState() => _AlbumTileState();
 }
 
-class _AlbumTileState extends State<AlbumTile>
-    with SingleTickerProviderStateMixin {
+class _AlbumTileState extends State<AlbumTile> with SingleTickerProviderStateMixin {
   AnimationController animationController;
   Animation<double> animation;
 
@@ -49,8 +48,8 @@ class _AlbumTileState extends State<AlbumTile>
   }
 
   void _viewAlbum(BuildContext context) async {
-    Navigator.of(context).pushNamed(AlbumPage.routeName,
-        arguments: {'model': widget.albumModel, 'showSaveButton': false});
+    Navigator.of(context)
+        .pushNamed(AlbumPage.routeName, arguments: {'model': widget.albumModel, 'showSaveButton': false});
   }
 
   int determineImageSize() {
@@ -74,11 +73,13 @@ class _AlbumTileState extends State<AlbumTile>
   }
 
   _select() {
-    widget.selectCallback(widget.albumModel.id, !widget.isSelected);
-    if (!widget.isSelected) {
-      animationController.animateBack(0.8, duration: Duration(milliseconds: 150));
-    } else {
-      animationController.forward();
+    if (widget.selectCallback != null) {
+      widget.selectCallback(widget.albumModel.id, !widget.isSelected);
+      if (!widget.isSelected) {
+        animationController.animateBack(0.8, duration: Duration(milliseconds: 150));
+      } else {
+        animationController.forward();
+      }
     }
   }
 

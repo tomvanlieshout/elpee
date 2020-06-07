@@ -68,21 +68,10 @@ class _UserWallCardState extends State<UserWallCard> {
   }
 
   List<String> _generateThumbnail() {
-    Random random = new Random();
-    int range = wall.albums.length;
-    List<int> indexList = new List();
     List<String> result = new List();
     for (int i = 0; i < 4; i++) {
-      int r = random.nextInt(range);
-      if (!indexList.contains(r)) {
-        indexList.add(r);
-      } else {
-        i--;
-      }
+      result.add(wall.albums[i]['images'][2]['url']);
     }
-    indexList.forEach((index) {
-      result.add(wall.albums[index]['images'][2]['url']);
-    });
     return result;
   }
 

@@ -2,20 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 
 class Helpers {
-  static showFlushbar(BuildContext context, String message, Icon icon, {int duration, bool isDismissible, Color backgroundColor, Color borderColor}) {
+  static showFlushbar(BuildContext context, String message, Icon icon,
+      {int duration,
+      bool isDismissible,
+      Color backgroundColor,
+      Color borderColor,
+      FlushbarPosition position,
+      bool shouldIconPulse,
+      EdgeInsets margin}) {
     return Flushbar(
       message: message,
       duration: Duration(seconds: duration ?? 3),
       isDismissible: isDismissible ?? true,
-      flushbarPosition: FlushbarPosition.BOTTOM,
+      flushbarPosition: position ?? FlushbarPosition.BOTTOM,
       backgroundColor: backgroundColor ?? Colors.black,
       borderRadius: 8,
-      margin: EdgeInsets.all(5),
+
       borderColor: borderColor ?? Colors.white,
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
       icon: icon,
-      overlayBlur: 1,
-      shouldIconPulse: false,
+      routeBlur: 1,
+      shouldIconPulse: shouldIconPulse ?? false,
+      margin: margin ?? EdgeInsets.all(16),
     ).show(context);
   }
 }

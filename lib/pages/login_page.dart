@@ -59,7 +59,8 @@ class _LoginFormState extends State<LoginForm> {
     WidgetsBinding.instance.addPostFrameCallback((_) => {
           if (widget.errorMessage != null)
             {
-              Helpers.showFlushbar(context, widget.errorMessage, Icon(FeatherIcons.alertTriangle, color: Colors.amber), duration: 4, isDismissible: false),
+              Helpers.showFlushbar(context, widget.errorMessage, Icon(FeatherIcons.alertTriangle, color: Colors.amber),
+                  duration: 4, isDismissible: false),
             }
         });
     super.initState();
@@ -70,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
     Size size = MediaQuery.of(context).size;
 
     return SingleChildScrollView(
-          child: Form(
+      child: Form(
         key: _formKey,
         autovalidate: _validator,
         child: Column(
@@ -97,8 +98,7 @@ class _LoginFormState extends State<LoginForm> {
                   email = value.trim();
                 }),
                 cursorColor: Colors.amber,
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.w300),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),
                 decoration: InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(
@@ -114,8 +114,7 @@ class _LoginFormState extends State<LoginForm> {
               padding: const EdgeInsets.only(left: 48.0, right: 48.0),
               child: TextFormField(
                 cursorColor: Colors.amber,
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.w300),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Password',
@@ -132,17 +131,13 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             GestureDetector(
-              onTap: () =>
-                  Navigator.of(context).pushNamed(ForgotPassword.routeName),
+              onTap: () => Navigator.of(context).pushNamed(ForgotPassword.routeName),
               child: Container(
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.only(right: size.width * 0.1, top: 12),
                 child: Text(
                   'Forgot password?',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w200,
-                      fontSize: 14),
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w200, fontSize: 14),
                 ),
               ),
             ),
@@ -166,38 +161,79 @@ class _LoginFormState extends State<LoginForm> {
                   width: 1,
                 ),
                 color: Colors.black,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
               ),
-            ),
-            FlatButton(
-              child: new Text(
-                'Sign up',
-                style: new TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w300,
-                  color: Colors.white70,
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(SignUp.routeName);
-              },
             ),
             Container(
-              margin: EdgeInsets.only(top: 16, bottom: 16),
+              margin: EdgeInsets.only(top: 16, bottom: 8),
               child: Divider(
                 indent: 32,
                 endIndent: 32,
                 thickness: 1,
               ),
             ),
-            // GestureDetector(
-            //   onTap: () {},
-            //   child: Image.asset(
-            //     'assets/images/google_signin.png',
-            //     scale: 2,
-            //   ),
-            // ),
+            Container(
+              margin: EdgeInsets.fromLTRB(24, 8, 24, 24),
+              child: Text(
+                'Don\'t have an account?',
+                style: new TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: OutlineButton(
+                child: new Text(
+                  'Sign up',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                borderSide: BorderSide(
+                  color: Colors.white,
+                  width: 1,
+                ),
+                color: Colors.black,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(SignUp.routeName);
+                },
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(8),
+              child: Text(
+                'or',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: FlatButton(
+                child: new Text(
+                  'Guest',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                color: Colors.white10,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                onPressed: () {
+                  _bloc.add(SignInAsGuest());
+                },
+              ),
+            ),
           ],
         ),
       ),

@@ -50,7 +50,7 @@ class _ArtistBioTabState extends State<ArtistBioTab> {
       borderColor: Colors.white,
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
       icon: Icon(FeatherIcons.alertTriangle, color: Colors.amber),
-      overlayBlur: 2,
+      routeBlur: 2,
       shouldIconPulse: false,
     ).show(context);
   }

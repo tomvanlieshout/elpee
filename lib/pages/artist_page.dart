@@ -23,7 +23,6 @@ class ArtistPage extends StatefulWidget {
 }
 
 class _ArtistPageState extends State<ArtistPage> {
-  static final routeName = 'artist-page';
   Artist artist;
   List<Album> albums = new List<Album>();
   List<TopTrack> topTracks = new List<TopTrack>();
@@ -163,7 +162,7 @@ class _ArtistPageState extends State<ArtistPage> {
                                 artist.name,
                                 overflow: TextOverflow.fade,
                                 softWrap: false,
-                                style: Theme.of(context).textTheme.title,
+                                style: Theme.of(context).textTheme.headline6,
                               ),
                             ),
                             _wikiLink != null || _wikiLink == ''
@@ -217,7 +216,7 @@ class _ArtistPageState extends State<ArtistPage> {
       borderColor: Colors.white,
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
       icon: Icon(FeatherIcons.alertTriangle, color: Colors.amber),
-      overlayBlur: 1,
+      routeBlur: 1,
       shouldIconPulse: false,
     ).show(context);
   }

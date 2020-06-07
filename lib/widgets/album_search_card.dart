@@ -52,14 +52,14 @@ class AlbumSearchCard extends StatelessWidget {
                     child: Text(
                       albumModel.name,
                       overflow: TextOverflow.fade,
-                      style: Theme.of(context).textTheme.body1,
+                      style: Theme.of(context).textTheme.bodyText1,
                       softWrap: false,
                     ),
                   ),
                   Text(
                     _getArtists(),
                     overflow: TextOverflow.fade,
-                    style: Theme.of(context).textTheme.body2,
+                    style: Theme.of(context).textTheme.bodyText2,
                     softWrap: false,
                   ),
                 ],

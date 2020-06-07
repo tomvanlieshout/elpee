@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elpee/data/model/album.dart';
+import 'package:elpee/helpers.dart';
 import 'package:elpee/widgets/album_tile.dart';
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,64 +19,63 @@ class _AlbumWallState extends State<AlbumWall> {
   FirebaseUser _user;
   Stream<QuerySnapshot> _stream;
   SharedPreferences _prefs;
-  bool _isLoading;
+  bool _isLoading, _isGuest;
   double _tileCount;
   List<dynamic> albums = new List();
 
   @override
   void initState() {
     _isLoading = true;
-    _fetchUser();
+    _setData().then((_) {
+      // show flushbar if guest, after short delay
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        Future.delayed(timeStamp, () {
+          if (_isGuest) {
+            Helpers.showFlushbar(context, 'Guests have limited access to elpee\'s features.',
+                Icon(FeatherIcons.bell, color: Colors.amber),
+                duration: 4,
+                position: FlushbarPosition.TOP,
+                shouldIconPulse: true,
+                margin: EdgeInsets.fromLTRB(16, 32, 16, 16));
+          }
+        });
+      });
+    });
     super.initState();
   }
 
-  _fetchUser() async {
-    final u = await FirebaseAuth.instance.currentUser();
-    setState(() {
-      _user = u;
-    });
-  }
-
-  void getPreferences() async {
+  _setData() async {
     _prefs = await SharedPreferences.getInstance();
-    if (_prefs != null && mounted) {
-      if (_prefs.get('homeWall') == null) {
-        setState(() {
-            _stream = Firestore.instance.collection('albums').snapshots();
-          });
-      } else {
-        if (_prefs.get('homeWall') == 'default-wall') {
-          setState(() {
-            _stream = Firestore.instance.collection('albums').snapshots();
-          });
+    _user = await FirebaseAuth.instance.currentUser();
+
+    _isGuest = _prefs.getBool('isGuest');
+    if (_isGuest) {
+      _stream = Firestore.instance.collection('albums').snapshots();
+    } else if (_user != null) {
+      if (_prefs.get('homeWall') != null) {
+        if (_prefs.get('homeWall') == 'fj3gDGj)12') {
+          _stream = Firestore.instance.collection('albums').snapshots();
         } else {
-          setState(() {
-            _stream = Firestore.instance
-                .collection('users')
-                .document(_user.uid)
-                .collection('user-walls')
-                .document(_prefs.get('homeWall'))
-                .collection('albums')
-                .snapshots();
-          });
+          _stream = Firestore.instance
+              .collection('users')
+              .document(_user.uid)
+              .collection('user-walls')
+              .document(_prefs.get('homeWall'))
+              .collection('albums')
+              .snapshots();
         }
+      } else {
+        _stream = Firestore.instance.collection('albums').snapshots();
       }
     }
+    _tileCount = _prefs.getDouble('tileCount') ?? 2.0;
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_user != null && _prefs == null) {
-      getPreferences();
-    }
-
-    if (_user != null && _prefs != null && _stream != null && mounted) {
-      setState(() {
-        _tileCount = _prefs.getDouble('tileCount') ?? 2.0;
-        _isLoading = false;
-      });
-    }
-
     return _isLoading
         ? Center(child: CircularProgressIndicator())
         : Scaffold(

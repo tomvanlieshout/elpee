@@ -121,7 +121,7 @@ class _UserWallPageState extends State<UserWallPage> {
       centerTitle: true,
       title: Text(
         'elpee',
-        style: Theme.of(context).textTheme.headline,
+        style: Theme.of(context).textTheme.headline5,
       ),
       actions: <Widget>[
         SizedBox(

@@ -1,4 +1,3 @@
-import 'package:elpee/pages/user_walls.dart';
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,22 +11,23 @@ import './search_form.dart';
 import './settings.dart';
 import '../widgets/help.dart';
 
-class Home extends StatefulWidget {
-  static final String routeName = "/home";
+class HomeGuest extends StatefulWidget {
+  static final String routeName = "/home-guest";
 
   @override
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<HomeGuest> {
+  AuthBloc _authBloc;
   List _pages;
   int _selectedPageIndex = 0;
 
   @override
   void initState() {
+    _authBloc = BlocProvider.of<AuthBloc>(context);
     _pages = [
       AlbumWall(),
-      UserWalls(),
       MultiBlocProvider(
         providers: [
           BlocProvider<AlbumBloc>(
@@ -65,9 +65,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
             backgroundColor: Theme.of(context).primaryColor,
-            appBar: _selectedPageIndex == 1 // Your Walls has a custom AppBar
-                ? null
-                : AppBar(
+            appBar: AppBar(
                     centerTitle: true,
                     actions: <Widget>[
                       new IconButton(
@@ -82,10 +80,10 @@ class _HomeState extends State<Home> {
                           );
                         },
                       ),
-                      // IconButton(
-                      //   icon: Icon(FeatherIcons.logOut),
-                      //   onPressed: () => _authBloc.add(SignOut()),
-                      // )
+                      IconButton(
+                        icon: Icon(FeatherIcons.logOut),
+                        onPressed: () => _authBloc.add(SignOut()),
+                      )
                     ],
                     title: Text(
                       'elpee',
@@ -96,7 +94,6 @@ class _HomeState extends State<Home> {
             body: _pages[_selectedPageIndex],
             bottomNavigationBar: BottomNavigationBar(
               onTap: _selectPage,
-              type: BottomNavigationBarType.fixed,
               backgroundColor: Theme.of(context).primaryColor,
               unselectedItemColor: Colors.white,
               selectedItemColor: Colors.white,
@@ -117,11 +114,11 @@ class _HomeState extends State<Home> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.person,
+                    Icons.search,
                     color: _selectedPageIndex == 1 ? Colors.amber : Colors.white,
                   ),
                   title: Text(
-                    'Your Walls',
+                    'Search',
                     style: TextStyle(
                       color: _selectedPageIndex == 1 ? Colors.amber : Colors.white,
                     ),
@@ -129,25 +126,13 @@ class _HomeState extends State<Home> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.search,
-                    color: _selectedPageIndex == 2 ? Colors.amber : Colors.white,
-                  ),
-                  title: Text(
-                    'Search',
-                    style: TextStyle(
-                      color: _selectedPageIndex == 2 ? Colors.amber : Colors.white,
-                    ),
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
                     Icons.settings,
-                    color: _selectedPageIndex == 3 ? Colors.amber : Colors.white,
+                    color: _selectedPageIndex == 2 ? Colors.amber : Colors.white,
                   ),
                   title: Text(
                     'Settings',
                     style: TextStyle(
-                      color: _selectedPageIndex == 3 ? Colors.amber : Colors.white,
+                      color: _selectedPageIndex == 2 ? Colors.amber : Colors.white,
                     ),
                   ),
                 ),

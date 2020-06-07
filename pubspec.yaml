@@ -1,7 +1,7 @@
 name: elpee
 description: Discover and share music!
 
-version: 1.1.0+7
+version: 1.1.2+9
 
 environment:
   sdk: ">=2.3.0 <3.0.0"
@@ -29,9 +29,11 @@ dependencies:
   flutter_launcher_icons: ^0.7.4
   equatable: ^1.1.1
   flutter_bloc: ^4.0.0
-  flushbar: ^1.9.1
+  flushbar: ^1.10.2
   google_sign_in: ^4.2.0
   feather_icons_flutter: ^4.7.4
+  path: ^1.6.4
+  path_provider: ^1.6.7
 
 dev_dependencies:
   flutter_test:

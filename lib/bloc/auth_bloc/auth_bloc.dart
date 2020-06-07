@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:elpee/firestore/auth.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -19,6 +21,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is SignUpWithEmail) {
       try {
         final user = await authRepository.signUp(event.email, event.password);
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isGuest', false);
         yield AuthenticatedState(user);
       } on PlatformException catch (e) {
         yield AuthError(e.message);
@@ -26,14 +30,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else if (event is SignInWithEmail) {
       try {
         final user = await authRepository.signIn(event.email, event.password);
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isGuest', false);
         yield AuthenticatedState(user);
       } on PlatformException catch (e) {
         yield AuthError(_parseError(e));
+      }
+    } else if (event is SignInAsGuest) {
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isGuest', true);
+        yield GuestAccessState();
+      } on Error catch (e) {
+        debugPrint(e.toString());
+        throw e;
       }
     } else if (event is FetchUser) {
       try {
         final user = await authRepository.getCurrentUser();
         if (user != null) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('isGuest', false);
           yield AuthenticatedState(user);
         } else {
           yield UnauthenticatedState();

@@ -59,7 +59,7 @@ class TopTrackCard extends StatelessWidget {
                   getArtists(),
                   overflow: TextOverflow.fade,
                   softWrap: false,
-                  style: Theme.of(context).textTheme.body2,
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
               ),
               Divider(

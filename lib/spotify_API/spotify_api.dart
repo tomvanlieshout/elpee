@@ -59,8 +59,12 @@ class SpotifyApi {
     bool tokenIsValid = await _validateToken();
 
     if (tokenIsValid) {
-      // TODO HandshakeException
-      return await get(query, headers: headers);
+      Response response = await get(query, headers: headers);
+      if (response.statusCode != 200) {
+        //TODO
+      } else {
+        return response;
+      }
     } else {
       try {
         await auth.getAuthToken();

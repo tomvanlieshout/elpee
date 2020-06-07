@@ -50,7 +50,7 @@ class ArtistCard extends StatelessWidget {
                 artist.name,
                 overflow: TextOverflow.fade,
                 softWrap: false,
-                style: Theme.of(context).textTheme.body1,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
           ],

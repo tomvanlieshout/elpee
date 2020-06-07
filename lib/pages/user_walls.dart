@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elpee/bloc/bloc.dart';
 import 'package:elpee/firestore/auth.dart';
 import 'package:elpee/firestore/firestore_service.dart';
+import 'package:elpee/helpers.dart';
 import 'package:elpee/widgets/user_wall_card.dart';
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,8 +63,13 @@ class _UserWallsState extends State<UserWalls> {
     try {
       _firestoreService.deleteWall(wallId, _user.uid);
     } on PlatformException catch (e) {
-      print(e.message);
-      throw e; //TODO
+      Helpers.showFlushbar(
+          context,
+          e.message,
+          Icon(
+            Icons.error,
+            color: Colors.amber,
+          ));
     }
     _exitEditMode();
   }
@@ -114,7 +120,7 @@ class _UserWallsState extends State<UserWalls> {
             if (_selectedId != null) {
               _deleteWall(_selectedId);
             } else {
-              // TODO call flushbar here with 'select a wall first.'
+              Helpers.showFlushbar(context, 'Please select a wall first.', Icon(Icons.error, color: Colors.red));
             }
             Navigator.of(context).pop();
           },
@@ -139,7 +145,7 @@ class _UserWallsState extends State<UserWalls> {
         ),
         IconButton(
           padding: EdgeInsets.only(right: 4),
-          onPressed: _selectedId == null ? () {} : () => _editWall(context, title, description), // TODO
+          onPressed: _selectedId == null ? () {} : () => _editWall(context, title, description),
           icon: Icon(FeatherIcons.edit2),
         ),
         IconButton(
@@ -187,11 +193,12 @@ class _UserWallsState extends State<UserWalls> {
             appBar: _showAlternativeAppbar
                 ? _buildTileEditAppBar(context)
                 : AppBar(
+                    centerTitle: true,
                     title: Text(
                       'Your Walls',
                       style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     actions: <Widget>[
@@ -280,7 +287,7 @@ class _UserWallsState extends State<UserWalls> {
         try {
           _firestoreService.editUserWall(title, description ?? '', _user.uid, _selectedId);
         } on PlatformException catch (e) {
-          // TODO
+          Helpers.showFlushbar(context, e.message, Icon(Icons.error, color: Colors.amber));
           print(e.message);
         }
       } else {

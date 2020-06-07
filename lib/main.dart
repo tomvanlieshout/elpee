@@ -1,9 +1,9 @@
+import 'package:elpee/pages/home_guest.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:elpee/bloc/bloc.dart';
 import 'package:elpee/data/album_repository.dart';
 import 'package:elpee/data/artist_repository.dart';
-import 'package:elpee/pages/wall_picker.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // PAGES
 import './pages/root_page.dart';
@@ -17,11 +17,17 @@ import './pages/search_form.dart';
 import './pages/album_page.dart';
 import './pages/home.dart';
 import './pages/settings.dart';
+import './pages/wall_picker.dart';
 
 import './firestore/auth.dart';
 import './service_locator.dart';
 
 void main() {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+  // can be called before `runApp()`
+  // More info: https://flutter.dev/docs/cookbook/plugins/picture-using-camera
+  WidgetsFlutterBinding.ensureInitialized();
+
   setupLocator();
   runApp(Elpee());
 }
@@ -42,6 +48,7 @@ class Elpee extends StatelessWidget {
           SignUp.routeName: (context) => SignUp(),
           ForgotPassword.routeName: (context) => ForgotPassword(),
           Home.routeName: (context) => Home(),
+          HomeGuest.routeName: (context) => HomeGuest(),
           AlbumWall.routeName: (context) => AlbumWall(),
           UserWalls.routeName: (context) => UserWalls(),
           UserWallPage.routeName: (context) => UserWallPage(),
@@ -71,19 +78,18 @@ class Elpee extends StatelessWidget {
           cardColor: Color.fromRGBO(9, 15, 34, 1),
           fontFamily: 'Roboto',
           textTheme: TextTheme(
-            headline: TextStyle(
+            headline5: TextStyle(
               fontSize: 34,
               fontFamily: 'Burgundy',
               color: Colors.white,
             ),
-            title: TextStyle(
+            headline6: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
-            body1: TextStyle(
-                fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
-            body2: TextStyle(
+            bodyText1: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+            bodyText2: TextStyle(
               fontSize: 16,
               color: Color.fromRGBO(118, 118, 127, 1.0),
             ),

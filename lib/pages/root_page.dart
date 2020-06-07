@@ -1,5 +1,6 @@
 import 'package:elpee/bloc/bloc.dart';
 import 'package:elpee/pages/home.dart';
+import 'package:elpee/pages/home_guest.dart';
 import 'package:elpee/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,11 +30,11 @@ class _RootPageState extends State<RootPage> {
         bloc: _bloc,
         builder: (context, state) {
           if (state is AuthInitial) {
-            // TODO
-            // return SplashScreen();
             return Center(child: CircularProgressIndicator());
           } else if (state is AuthenticatedState) {
             return Home();
+          } else if (state is GuestAccessState) {
+            return HomeGuest();
           } else if (state is UnauthenticatedState) {
             return LoginPage();
           } else if (state is AuthLoadInProgress) {

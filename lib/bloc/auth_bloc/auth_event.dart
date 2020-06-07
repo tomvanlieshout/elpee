@@ -24,6 +24,13 @@ class SignInWithEmail extends AuthEvent {
   List<Object> get props => [email, password];
 }
 
+class SignInAsGuest extends AuthEvent {
+  const SignInAsGuest();
+
+  @override
+  List<Object> get props => [];
+}
+
 class FetchUser extends AuthEvent {
   const FetchUser();
 

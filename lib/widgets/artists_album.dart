@@ -41,7 +41,7 @@ class ArtistsAlbum extends StatelessWidget {
                 album.name,
                 overflow: TextOverflow.fade,
                 softWrap: false,
-                style: Theme.of(context).textTheme.body1,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
             Container(
@@ -50,7 +50,7 @@ class ArtistsAlbum extends StatelessWidget {
                 _getArtists(),
                 overflow: TextOverflow.fade,
                 softWrap: false,
-                style: Theme.of(context).textTheme.body2,
+                style: Theme.of(context).textTheme.bodyText2,
               ),
             ),
           ],
